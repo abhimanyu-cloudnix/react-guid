@@ -42,12 +42,21 @@ class App extends Component{
 
 
   const style={
-    backgroundColor: 'white',
+    backgroundColor: 'green',
     font:'inerit',
     padding:'10px'
   }
   
   let persons = null;
+  const classes= [];
+	if(this.state.persons.length <= 2){
+    classes.push('red');
+
+  }
+  if(this.state.persons.length <= 1){
+    classes.push('bold');
+
+  }
 
   if( this.state.showPerson ){
     console.log("sdsdfsdf");
@@ -65,10 +74,12 @@ class App extends Component{
           </div>
     );
 
+    style.backgroundColor = 'red';
   }
     return (
       <div className="App">
-        <h1>Hii this is react app</h1>
+        <h1 >Hii this is react app</h1>
+        <p className={classes.join(' ')}>Color changeer</p>
         <button onClick={this.togglePersonHandler} style={style} >Switch it</button>
         
         {persons}
