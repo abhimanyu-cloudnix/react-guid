@@ -1,54 +1,45 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person.js';
 
-const App = prop =>{
+class App extends Component{
 
-  const [ personsState, setPersonsState] = useState ({
+  state = ({
     persons : [
-      {name : 'abhi', age: 19},
-      {name : 'asdasd', age: 20},
-      {name : 'abhi3', age: 19},
+      {id : 1 , name : 'abhi', age: 19},
+      {id : 2 , name : 'asdasd', age: 20},
+      {id : 3 , name : 'abhi3', age: 19},
     ],
     showPerson : false
   });
 
-  // const switchHandler = () =>{
-  //   // console.log("Was onClick");
-  //   setPersonsState({
-  //     persons : [
-  //     {name : 'abhi', age: 19},
-  //     {name : 'kumar', age: 543},
-  //     {name : 'kjhsfk', age: 19},
-  //   ]
-  //   });
-    
-  // }
 
-  const newNameHandler = (event) =>{
+  newNameHandler = (event) =>{
     console.log(event.target);
-    setPersonsState({
+    this.setState({
       persons : [
-        {name : event.target.value, age: 19},
-        {name : "hi", age: 20},
-        {name : 'abhi3', age: 19},
+        {id : 1, name : event.target.value, age: 19},
+        {id : 2, name : "hi", age: 20},
+        {id : 3, name : 'abhi3', age: 19},
       ]
     })
   }
 
-  const togglePersonHandler = () =>{
+  togglePersonHandler = () =>{
     console.log("Was onClick");
-    const doesShow = personsState.showPerson;
-    setPersonsState({
-      persons : [
-        {name : 'abhi', age: 19},
-        {name : 'kumar', age: 543},
-        {name : 'kjhsfk', age: 19},
-      ],
-      showPerson : !doesShow
-    }); 
+    const doesShow = this.state.showPerson;
+    this.setState({showPerson : !doesShow});
     
   }
+
+  deletePersonHandler = (personIndex) =>{
+    const personnew = [...this.state.persons];
+    personnew.splice(personIndex, 1);
+    this.setState({ persons : personnew})
+  }
+
+  render(){
+
 
   const style={
     backgroundColor: 'white',
@@ -58,14 +49,16 @@ const App = prop =>{
   
   let persons = null;
 
-  if( personsState.showPerson ){
+  if( this.state.showPerson ){
     console.log("sdsdfsdf");
     persons = (
       <div>
-            {personsState.persons.map(person => {
+            {this.state.persons.map((person, index) => {
               return <Person 
+                        clicked={() => this.deletePersonHandler(index)}
                         name={person.name} 
                         age={person.age} 
+                        key={person.id}
                       />
             })}
             
@@ -76,12 +69,12 @@ const App = prop =>{
     return (
       <div className="App">
         <h1>Hii this is react app</h1>
-        <button onClick={togglePersonHandler} style={style} >Switch it</button>
+        <button onClick={this.togglePersonHandler} style={style} >Switch it</button>
         
         {persons}
       </div>
     );
-  
+  }
   // return React.createElement('div',{className:'App'}, React.createElement('h1',null, 'Hi, i\'m abhi!!!'));
 }
 
