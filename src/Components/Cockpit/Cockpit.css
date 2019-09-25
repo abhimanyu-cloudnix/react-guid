@@ -1,0 +1,18 @@
+
+  .red{
+    color:  red;
+  }
+  .green{
+    color:  green;
+  }
+  .bold{
+    font-weight: bold;
+  }
+  button:hover{
+    background: blue;
+  }
+  .btn{
+    color:fff;
+    border:1px solid #eee;
+    padding:10px;
+  }

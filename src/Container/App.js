@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person/Person.js';
+import Persons from '../Components/Persons/Persons';
+import Cockpit from '../Components/Cockpit/Cockpit';
 
 class App extends Component{
 
@@ -33,55 +34,30 @@ class App extends Component{
   }
 
   deletePersonHandler = (personIndex) =>{
+    console.log(personIndex);
     const personnew = [...this.state.persons];
     personnew.splice(personIndex, 1);
     this.setState({ persons : personnew})
   }
 
   render(){
-
-
-  const style={
-    backgroundColor: 'green',
-    font:'inerit',
-    padding:'10px'
-  }
-  
   let persons = null;
-  const classes= [];
-	if(this.state.persons.length <= 2){
-    classes.push('red');
-
-  }
-  if(this.state.persons.length <= 1){
-    classes.push('bold');
-
-  }
-
   if( this.state.showPerson ){
-    console.log("sdsdfsdf");
-    persons = (
-      <div>
-            {this.state.persons.map((person, index) => {
-              return <Person 
-                        clicked={() => this.deletePersonHandler(index)}
-                        name={person.name} 
-                        age={person.age} 
-                        key={person.id}
+    
+    persons =  <Persons  
+                clicked={this.deletePersonHandler}
+                persons={this.state.persons} 
+                changed={this.newNameHandler} 
                       />
-            })}
-            
-          </div>
-    );
-
-    style.backgroundColor = 'red';
+    ;
   }
     return (
       <div className="App">
-        <h1 >Hii this is react app</h1>
-        <p className={classes.join(' ')}>Color changeer</p>
-        <button onClick={this.togglePersonHandler} style={style} >Switch it</button>
-        
+        <Cockpit 
+          title={this.props.title}
+          showPerson={this.state.showPerson}
+          persons={this.state.persons}
+          clicked={this.togglePersonHandler} />
         {persons}
       </div>
     );
